@@ -1,0 +1,100 @@
+﻿@model FoodStoreApp.Models.ViewModels.ProductViewModel
+
+@{
+    var title = "Добавить продукт";
+}
+
+<form method="post" enctype="multipart/form-data">
+    @if (Model.Product.Id != 0)
+    {
+        title = "Редактирование";
+        <input asp-for="Product.Id" hidden />
+    }
+    <div class="border p-3">
+
+        <div class="form-group row">
+            <h2 class="text-info pl-3">@title</h2>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row mt-3">
+                    <div class="col-4">
+                        <label asp-for="Product.Name"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Product.Name" class="form-control" />
+                        <span asp-validation-for="Product.Name" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="form-group row mt-3">
+                    <div class="col-4">
+                        <label asp-for="Product.Price"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Product.Price" class="form-control" />
+                        <span asp-validation-for="Product.Price" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="form-group row mt-3">
+                    <div class="col-4">
+                        <label> Описание </label>
+                    </div>
+                    <div class="col-8">
+                        <textarea asp-for="Product.Description" class="form-control summernote"></textarea>
+                        <span asp-validation-for="Product.Description" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="form-group row mt-3">
+                    <div class="col-4">
+                        Изображение
+                    </div>
+                    <div class="col-8">
+                        <input type="file" name="files" id="uploadBox" multiple class="form-control" />
+                    </div>
+
+                </div>
+
+                <div class="form-group row mt-3">
+                    <div class="col-4">
+                        <label asp-for="Product.Categoryid"></label>
+                    </div>
+                    <div class="col-8">
+                        <select asp-for="Product.Categoryid" asp-items="@Model.CategorySelectList" class="form-control">
+                            <option disabled selected>--Выбрать Категорию--</option>
+                        </select>
+                        <span asp-validation-for="Product.Categoryid" class="text-danger"></span>
+                    </div>
+
+
+                <div class="form-group row mt-3">
+                    <div class="col-8 offset-4 row">
+
+                        <div class="col">
+                            @if (Model.Product.Id != 0)
+                            {
+                //update
+                                <input type="submit" class="btn btn-info w-100" value="Обновить" />
+                            }
+                            else
+                            {
+                //create
+                                <input type="submit" onclick="return validateInput()" class="btn btn-primary w-100" value="Создать" />
+                            }
+
+                        </div>
+                        <div class="col">
+                            <a asp-action="Index" class="btn btn-success w-100"><i class="fas fa-sign-out-alt"></i> Назад</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+
