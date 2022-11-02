@@ -14,6 +14,8 @@ namespace FoodStoreApp.Models
         public string? Image { get; set; }
         [Display (Name ="Тип Категории")]
         public int Categoryid { get; set; }
+        public int Managerid { get; set; }
+        public virtual Manager Manager { get; set; }
         public virtual Category Category { get; set; }
     }
 }

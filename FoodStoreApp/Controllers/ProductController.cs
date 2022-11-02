@@ -67,7 +67,7 @@ namespace FoodStoreApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(ProductViewModel viewModel)
         {
-            if(ModelState.IsValid)
+            if(!ModelState.IsValid)
             {
                 var files = HttpContext.Request.Form.Files;
                 string webRootPath = _webHostEnvironment.WebRootPath;
@@ -131,6 +131,26 @@ namespace FoodStoreApp.Controllers
             });
 
             return View(viewModel);
+        }
+
+        //Get-Delete
+        public IActionResult Delete(int? id)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePost(int? id)
+        {
+            var pr = _db.Product.Find(id);
+            if (pr == null)
+            {
+                return NotFound();
+            }
+            _db.Product.Remove(pr);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
